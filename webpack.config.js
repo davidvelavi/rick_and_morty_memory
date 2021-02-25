@@ -24,6 +24,15 @@ module.exports = {
     }, {
       test: /\.(s*css)$/,
       use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+    },
+    {
+      test: /\.(jpg|png|gif)$/,
+      use: [{
+        'loader': 'file-loader',
+        options: {
+          name: 'assets/[hash].[ext]',
+        },
+      }],
     }],
   },
   plugins: [
@@ -39,7 +48,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     historyApiFallback: true,
-    port: 3005,
+    port: 3000,
   },
 
 };

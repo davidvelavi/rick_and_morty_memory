@@ -1,5 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import { AppContextProvider } from './containers/ContextProvider';
 
-ReactDOM.render(<App />, document.getElementById('App'));
+ReactDOM.render(
+  <AppContextProvider>
+    <App />
+  </AppContextProvider>
+  , document.getElementById('App'),
+);
