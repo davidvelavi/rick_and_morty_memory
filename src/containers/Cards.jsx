@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { v4 } from 'uuid';
 import useCharacters from '../hooks/useCharacters';
 import Card from '../components/Card';
 import '../assets/styles/containers/Cards.scss';
-import { getRandomIndex } from '../utils';
+import { deepClone } from '../utils';
+import AppContext from './ContextProvider';
 
-const API = `https://rickandmortyapi.com/api/character/?page=${getRandomIndex(1, 34)}`;
+const API = 'https://rickandmortyapi.com/api/character/?page={}';
 
 const Cards = () => {
   const { characters, setCharacters } = useCharacters(API);
   const [cardsSelected, setCardsSelected] = useState([]);
+  const { updateStatistics, state } = useContext(AppContext);
 
   const updateCharacterState = (character) => {
     const charactersUpdate = characters.map((item) => {
@@ -28,19 +31,27 @@ const Cards = () => {
   useEffect(() => {
     if (cardsSelected.length === 2) {
       const [card1, card2] = cardsSelected;
-      const charactersUpdate = JSON.parse(JSON.stringify(characters));
-
       if (card1.id !== card2.id) {
+        const charactersUpdate = deepClone(characters);
         charactersUpdate[card1.position].selected = false;
         charactersUpdate[card2.position].selected = false;
+        setTimeout(() => {
+          setCharacters(charactersUpdate);
+        }, 400);
       }
-
-      setTimeout(() => {
-        setCharacters(charactersUpdate);
-      }, 400);
       setCardsSelected([]);
     }
   }, [cardsSelected]);
+
+  useEffect(() => {
+    if (characters.length && characters.every((item) => item.selected === true)) {
+      updateStatistics({
+        ...state.game,
+        number: state.statistics.length + 1,
+        key: v4(),
+      });
+    }
+  }, [characters]);
 
   return (
     <div className='Cards'>

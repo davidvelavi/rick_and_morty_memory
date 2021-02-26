@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../assets/styles/components/Card.scss';
 import classnames from 'classnames';
-import frontImage from '../assets/images/cover1.png';
+import frontImage from '../assets/images/cover.png';
+import AppContext from '../containers/ContextProvider';
 
 const Card = ({ character, updateCharacterState }) => {
-  const { image } = character;
+  const { image, selected } = character;
 
-  const [selected, setSelected] = useState(false);
+  const { updateGame } = useContext(AppContext);
+
   const backImageStyle = {
     backgroundImage: `url(${image})`,
     backgroundPosition: 'center',
@@ -14,15 +16,15 @@ const Card = ({ character, updateCharacterState }) => {
     backgroundRepeat: 'no-repeat',
   };
   const fromImageStyle = { ...backImageStyle, ...{ backgroundImage: `url(${frontImage})` } };
-  const handleClick = () => {
-    const _selected = true;
-    setSelected(_selected);
-    updateCharacterState({ ...character, selected: _selected });
-  };
 
-  useEffect(() => {
-    setSelected(character.selected);
-  }, [character.selected]);
+  const handleClick = () => {
+    if (!selected) {
+      const _selected = true;
+      const _character = JSON.parse(JSON.stringify(character));
+      updateCharacterState({ ..._character, selected: _selected });
+      updateGame(1);
+    }
+  };
 
   return (
     <div

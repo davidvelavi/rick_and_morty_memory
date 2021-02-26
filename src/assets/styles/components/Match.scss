@@ -1,0 +1,22 @@
+.Match{
+    background-color: white;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    &-Header{
+        border-bottom: 2px solid #ccc;
+        color: #000;
+        font-size: 3rem;
+        padding: 0.2rem;
+    }
+
+    &-Number{
+        font-size: 3rem;
+        font-weight: 500;
+        font-style: italic;
+    }
+    &-Body{
+        display: flex; 
+        justify-content: center;  
+    }
+}

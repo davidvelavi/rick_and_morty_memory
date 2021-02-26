@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+
 :root{
-    --card-with: 18rem;
+    --card-with: 10rem;
 }
 *{
     box-sizing: border-box;
@@ -15,8 +17,14 @@ html * {
     font-size: 1.6rem;
 }
 body{
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
 }
